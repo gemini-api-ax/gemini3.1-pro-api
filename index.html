@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charSet="utf-8" />
+    <title>【最新】Gemini 3.1 Pro API国内直连教程_简易API中转站_AI大模型API</title>
+    <meta name="description" content="Gemini 3.1 Pro推理性能翻倍！本文提供最新Gemini 3.1 Pro API国内直连教程。通过简易API中转站，普通用户与开发者可低成本、零门槛调用Gemini API及各类AI大模型API，附带详细接入代码与Cherry Studio配置指南。">
+    <meta name="keywords" content="gemini 3.1 pro API, gemini api, API中转站, 简易api中转站, AI大模型API, Gemini国内直连, ChatGPT API, Claude API">
+    <meta property="og:title" content="【最新】Gemini 3.1 Pro API国内直连教程 | 简易API大模型中转站">
+    <meta property="og:description" content="全面解析Gemini 3.1 Pro三级思考模式与多模态能力，提供国内免翻低价调用Gemini API的完整教程，简易API中转站助力开发者高效接入AI大模型API。">
+    <meta property="og:url" content="https://jeniya.top/">
+    <meta property="twitter:title" content="【最新】Gemini 3.1 Pro API国内直连教程 | 简易API大模型中转站">
+    <meta property="twitter:description" content="全面解析Gemini 3.1 Pro三级思考模式与多模态能力，提供国内免翻低价调用Gemini API的完整教程，简易API中转站助力开发者高效接入AI大模型API。">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="icon" href="/openai.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        :root {
+            --color-1: #007bff;
+            --color-2: #6a5acd;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .content {
+            text-align: center;
+            max-width: 900px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            background: -webkit-linear-gradient(45deg, #4FE2B1, #00A2E8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.3;
+        }
+        h2.subtitle {
+            font-size: 24px;
+            color: #ddd;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+        .button {
+            display: inline-block;
+            padding: 16px 36px;
+            background: linear-gradient(45deg, #007bff, #00a0b0);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 22px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            margin-top: 10px;
+        }
+        .button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.6);
+        }
+        .update-box {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #ffcc00;
+            background: rgba(255, 204, 0, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-1), var(--color-2));
+            z-index: -1;
+            opacity: 0.15;
+        }
+        .arrow-down {
+            position: absolute;
+            bottom: 30px;
+            cursor: pointer;
+            font-size: 36px;
+            color: #4FE2B1;
+            animation: pulse 2s infinite;
+            z-index: 10;
+        }
+        @keyframes pulse {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Markdown & Content Styles */
+        .markdown-content {
+            padding: 40px;
+            background-color: #1e1e1e;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+            margin: 0 auto;
+            max-width: 900px;
+            border-radius: 16px 16px 0 0;
+        }
+        .markdown-content h2 {
+            font-size: 30px;
+            margin-top: 40px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+            color: #4FE2B1;
+        }
+        .markdown-content h3 {
+            font-size: 22px;
+            color: #00A2E8;
+            margin-top: 25px;
+        }
+        .markdown-content p, .markdown-content li {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #dcdcdc;
+        }
+        .markdown-content blockquote {
+            border-left: 4px solid #00A2E8;
+            padding-left: 15px;
+            margin-left: 0;
+            background: rgba(0, 162, 232, 0.1);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        pre {
+            background-color: #0d0d0d;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #333;
+        }
+        code {
+            font-family: Consolas, Monaco, monospace;
+            color: #a6e22e;
+            font-size: 15px;
+        }
+        
+        /* 简易API Highlight Style */
+        .maxfly-highlight {
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            color: #ffffff !important;
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: inline-block;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(229, 46, 113, 0.4);
+            transition: all 0.3s ease;
+        }
+        .maxfly-highlight:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(229, 46, 113, 0.6);
+        }
+
+        /* Section Styles */
+        .section-container {
+            margin: 30px 0;
+            padding: 25px;
+            border-radius: 12px;
+            background: #252526;
+            border-left: 4px solid #007bff;
+            transition: transform 0.3s ease;
+        }
+        .section-container:hover {
+            transform: translateX(5px);
+            background: #2a2a2b;
+        }
+
+        /* Mobile Styles */
+        @media screen and (max-width: 767px) {
+            .container { padding: 60px 15px 40px; }
+            .content { padding: 25px; }
+            h1 { font-size: 32px; }
+            h2.subtitle { font-size: 18px; }
+            .button { font-size: 18px; padding: 12px 24px; }
+            .markdown-content { padding: 20px; border-radius: 0; }
+            .markdown-content h2 { font-size: 24px; }
+            .arrow-down { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div class="content">
+            <h1>Gemini 3.1 Pro API 国内直连教程<br>AI大模型API中转站</h1>
+            <h2 class="subtitle">推理性能翻倍！普通用户与开发者如何低成本、零门槛体验？</h2>
+            <a href="https://jeniya.top/" target="_blank" class="button">前往 简易API中转站 获取接口</a>
+            <div class="update-box">
+                🔥 接口状态：稳定运行 | 🕒 本文自动更新于：<strong id="curdate"></strong>
+            </div>
+        </div>
+        <div class="arrow-down" onclick="scrollToContent()">⬇️ 向下滚动查看完整教程</div>
+    </div>
+
+    <section class="markdown-content" id="more-content">
+
+        <blockquote>
+            <p><strong>导语：</strong>Gemini 3.1 Pro 震撼发布！谷歌官方表示其推理能力比 Gemini 3 Pro 提升了一倍以上。本文将全面解析 Gemini 3.1 Pro 的核心能力，并手把手教您如何通过 <a href="https://jeniya.top/" target="_blank" class="maxfly-highlight">简易API中转站</a>，在国内以超低价格直连调用 <strong>gemini 3.1 pro API</strong> 及各类 <strong>AI大模型API</strong>。</p>
+        </blockquote>
+
+        <div class="section-container">
+            <h2>一、Gemini 3.1 Pro 打造全能型推理大脑</h2>
+            
+            <h3>1. ARC-AGI-2 测试 77.1%，碾压级推理能力</h3>
+            <p>Gemini 3.1 Pro 在极具挑战性的 ARC-AGI-2 基准测试中取得了 <strong>77.1%</strong> 的惊人得分。作为对比，三个月前的 Gemini 3 Pro 得分为 31.1%，而同样主攻推理路线的 OpenAI o1 和 GPT-5.2 在此测试中仅为 52.9%。</p>
+            <p>这项测试不考死记硬背，只考逻辑推演！77.1% 意味着当别的模型还在靠堆参数硬扛时，Gemini 3.1 Pro 已经在“理解逻辑、推演规则”上遥遥领先。</p>
+
+            <h3>2. 首创“三级思考模式”，省钱又高效</h3>
+            <p>过去的模型只有“快速应答”和“深度推理”两个极端。Gemini 3.1 Pro 引入了灵活的三级思考系统，开发者在调用 <strong>gemini api</strong> 时可通过 `thinking_level` 参数自由切换：</p>
+            <ul>
+                <li><strong>Low (低)</strong>：快速响应模式，适合日常简单任务。比高档位节省 60%-80% 成本。</li>
+                <li><strong>Medium (中)</strong>：平衡推理模式，逻辑分析能力等同于上一代高档位，但成本仅为其 40%。</li>
+                <li><strong>High (高)</strong>：深度推理模式 (Deep Think Mini)，适合专业复杂任务，架构优化让同等深度下成本降低约 30%。</li>
+            </ul>
+
+            <h3>3. 更低的幻觉率，感知维度全面扩展</h3>
+            <p>原生支持文本、图像、音频、视频、PDF和代码，无需预处理即可跨模态无缝融合。同时，其抗幻觉指标大幅跃升，在严谨的学术和代码场景中，“知道自己不知道”比“乱猜”更加安全可靠。</p>
+        </div>
+
+        <div class="section-container">
+            <h2>二、国内如何低价使用 Gemini 3.1 Pro API？</h2>
+            <p>虽然官方 API 定价与上代持平，但对于国内开发者而言，网络访问限制和高昂的汇率依然是痛点。市面上许多第三方 API 价格虚高，存在中间商赚差价。</p>
+            <p>强烈推荐使用 <a href="https://jeniya.top/" target="_blank" class="maxfly-highlight">简易API中转站</a>！作为专业的 <strong>API中转站</strong>，它为您提供源头级别的直连体验：</p>
+            <ul>
+                <li>✅ <strong>国内直连免翻</strong>：专属高速线路，极速响应。</li>
+                <li>✅ <strong>极致性价比</strong>：以远低于官方和同行的价格调用 <strong>gemini 3.1 pro API</strong>。</li>
+                <li>✅ <strong>全模型聚合</strong>：除了 Gemini 系列，还支持 ChatGPT、Claude 3.5、Deepseek 等顶级 <strong>AI大模型API</strong>。</li>
+                <li>✅ <strong>完美兼容</strong>：全面兼容 OpenAI 接口格式，零学习成本无缝迁移。</li>
+            </ul>
+        </div>
+
+        <div class="section-container">
+            <h2>三、开发者接入 Gemini 3.1 Pro API 教程</h2>
+            <p>在 <a href="https://jeniya.top/" target="_blank">简易API官网 (jeniya.top)</a> 注册并获取您的 API Key 后，即可通过以下方式快速接入：</p>
+
+            <h3>方式一：通过简易API调用（OpenAI 兼容格式，推荐）</h3>
+            <p>只需替换基础地址和模型名称，即可用 OpenAI 的 SDK 调用 Gemini！</p>
+            <pre><code>import openai
+ 
+# 配置简易API中转站的地址和密钥
+client = openai.OpenAI(
+    api_key="sk-你的简易API密钥",
+    base_url="https://api.jeniya.top/v1"  # 简易API国内直连地址
+)
+ 
+# 调用 Gemini-3.1-Pro
+response = client.chat.completions.create(
+    model="gemini-3.1-pro",
+    messages=[
+        {"role": "system", "content": "你是一个资深的架构师"},
+        {"role": "user", "content": "请用Python写一个高并发的API中转站架构思路"}
+    ],
+    stream=False
+)
+ 
+print(response.choices[0].message.content)</code></pre>
+        </div>
+
+        <div class="section-container">
+            <h2>四、普通用户使用 Gemini 3.1 Pro 教程</h2>
+            <p>如果您不是程序员，也可以通过下载 <strong>Cherry Studio</strong> 或 <strong>Chatbox</strong> 等客户端工具，配合 <a href="https://jeniya.top/" target="_blank" class="maxfly-highlight">简易api中转站</a> 轻松使用：</p>
+            <ol>
+                <li><strong>注册获取密钥：</strong> 访问 <a href="https://jeniya.top/" target="_blank">https://jeniya.top/</a> 注册账号，在控制台生成您的专属 API Key。</li>
+                <li><strong>下载客户端：</strong> 下载并安装 Cherry Studio。</li>
+                <li><strong>配置模型服务：</strong> 在软件设置中找到“模型服务”，添加自定义提供商（格式选择 OpenAI）。</li>
+                <li><strong>填写接口信息：</strong> 
+                    <br>API 密钥：填入刚获取的 Key
+                    <br>API 地址：<code>https://api.jeniya.top/v1</code>
+                </li>
+                <li><strong>添加模型名称：</strong> 手动输入 <code>gemini-3.1-pro</code>（请确保字母大小写完全一致）。</li>
+            </ol>
+            <p>配置完成后，您就可以在本地无限制、极速地体验 Gemini 3.1 Pro 强大的推理能力了！</p>
+        </div>
+
+        <div class="section-container" style="text-align: center; background: #1a1a1a; border: 1px dashed #4FE2B1;">
+            <h2>🚀 立即开启您的 AI 开发之旅</h2>
+            <p>无论是代码生成、复杂系统整合，还是文学意境的创意编程，Gemini 3.1 Pro 都能完美胜任。<br>不再为网络和高昂的 API 账单发愁！</p>
+            <a href="https://jeniya.top/" target="_blank" class="button" style="margin-bottom: 20px;">点击访问 简易API中转站 (jeniya.top)</a>
+        </div>
+
+    </section>
+
+    <script>
+        // 动态背景颜色生成
+        const colors = [
+            ['#0f2027', '#203a43'], 
+            ['#141e30', '#243b55'], 
+            ['#000000', '#434343'],
+            ['#1d2b64', '#f8cdda']
+        ];
+        const randomIndex = Math.floor(Math.random() * colors.length);
+        const [color1, color2] = colors[randomIndex];
+        document.documentElement.style.setProperty('--color-1', color1);
+        document.documentElement.style.setProperty('--color-2', color2);
+
+        // 平滑滚动
+        function scrollToContent() {
+            document.getElementById('more-content').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 每天自动更新时间逻辑
+        function formatTodayDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}年${month}月${day}日`;
+        }
+        
+        // 注入当前日期
+        document.getElementById('curdate').textContent = formatTodayDate();
+        
+        // 动态更新Title中的年份 (SEO辅助，虽然爬虫不一定执行，但对用户体验好)
+        const currentYear = new Date().getFullYear();
+        document.title = document.title.replace('最新', currentYear + '年最新');
+    </script>
+</body>
+</html>
